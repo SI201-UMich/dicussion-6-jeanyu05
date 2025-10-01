@@ -53,6 +53,12 @@ class PollReader():
         Remember that the first row of a CSV contains all of the column names,
         and each value in a CSV is seperated by a comma.
         """
+        if not self.raw_data:
+            return
+        for line in self.raw_data[1:]:
+            parts = [p.strip() for p in line.split(",")]
+            if len(parts) < 6:
+                continue
 
         # iterate through each row of the data
         for i in self.raw_data:
