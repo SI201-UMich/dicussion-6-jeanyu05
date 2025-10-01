@@ -59,12 +59,19 @@ class PollReader():
             parts = [p.strip() for p in line.split(",")]
             if len(parts) < 6:
                 continue
+            month = parts[0]
+            date = int(parts[1])
+            sample = int(parts[2])
+            sample_type = parts[3]
 
-        # iterate through each row of the data
-        for i in self.raw_data:
-
-            # split up the row by column
-            seperated = i.split(' ')
+            def _to_float(x: str) -> float:
+                x = x.strip()
+                if x.endswith("%"):
+                    return float(x[:-1]) / 100.0
+                return float(x)
+            
+            harris = _to_float(parts[4])
+            trump = _to_float(parts[5])
 
             # map each part of the row to the correct column
             self.data_dict['month'].append(seperated[0])
